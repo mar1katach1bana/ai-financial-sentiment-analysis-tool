@@ -1,0 +1,72 @@
+monitoring:
+  # Data drift detection
+  drift_detection:
+    threshold: 0.1
+    metrics:
+      - wasserstein
+      - ks_test
+      - chi_squared
+    window_size: 1000
+    reference_size: 10000
+
+  # Model performance monitoring
+  performance:
+    metrics:
+      - accuracy
+      - precision
+      - recall
+      - f1_score
+      - roc_auc
+    alert_thresholds:
+      accuracy: 0.85
+      f1_score: 0.80
+    evaluation_frequency: 1000  # samples
+
+  # Resource monitoring
+  resources:
+    memory_threshold_mb: 8192  # 8GB
+    cpu_threshold_percent: 80
+    gpu_memory_threshold_mb: 4096  # 4GB
+    disk_usage_threshold_percent: 90
+
+  # Real-time monitoring
+  realtime:
+    window_size: 100
+    anomaly_threshold: 0.5
+    update_frequency_s: 60
+    metrics:
+      - sentiment_score
+      - prediction
+      - cpu_usage
+      - memory_usage
+
+  # Model health checks
+  health_checks:
+    prediction_latency_ms: 100
+    batch_processing_timeout_s: 300
+    error_rate_threshold: 0.01
+    null_predictions_threshold: 0.001
+
+  # Alerts configuration
+  alerts:
+    channels:
+      - email
+      - slack
+    email:
+      recipients:
+        - alerts@yourdomain.com
+    slack:
+      channel: "#model-monitoring"
+
+  # Logging and storage
+  storage:
+    metrics_retention_days: 90
+    detailed_logs_retention_days: 30
+    monitoring_db: "monitoring_metrics"
+    collection_prefix: "fin_sentiment_"
+
+  # Dashboard configuration
+  dashboard:
+    refresh_interval_s: 300
+    default_timeframe_hours: 24
+    max_datapoints: 1000

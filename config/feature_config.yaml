@@ -1,0 +1,84 @@
+features:
+  # Technical indicators configuration
+  technical:
+    moving_averages:
+      - type: "SMA"
+        periods: [5, 10, 20, 50, 200]
+      - type: "EMA"
+        periods: [12, 26]
+    momentum:
+      - type: "RSI"
+        period: 14
+      - type: "MACD"
+        fast_period: 12
+        slow_period: 26
+        signal_period: 9
+    volatility:
+      - type: "Bollinger"
+        period: 20
+        std_dev: 2
+      - type: "ATR"
+        period: 14
+
+  # Sentiment features configuration
+  sentiment:
+    text_features:
+      - word_count
+      - unique_words
+      - sentiment_score
+      - subjectivity_score
+      - entity_count
+    aggregation_windows:
+      - interval: "1h"
+        features:
+          - mean_sentiment
+          - sentiment_volatility
+          - entity_sentiment
+      - interval: "1d"
+        features:
+          - sentiment_trend
+          - entity_correlation
+    entity_features:
+      - entity_sentiment_score
+      - entity_mention_count
+      - entity_importance
+
+  # Market features configuration
+  market:
+    price_features:
+      - returns
+      - log_returns
+      - volatility
+    volume_features:
+      - volume
+      - volume_ma
+      - relative_volume
+    market_indicators:
+      - market_cap
+      - pe_ratio
+      - sector_performance
+
+  # Feature engineering pipeline
+  pipeline:
+    preprocessing:
+      scaling:
+        method: "standard"
+        target_range: [-1, 1]
+      missing_values:
+        strategy: "forward_fill"
+        max_fill_length: 5
+    feature_selection:
+      method: "recursive"
+      n_features: 50
+      scoring: "mutual_info"
+    dimensionality_reduction:
+      method: "PCA"
+      n_components: 0.95
+
+  # Feature storage configuration
+  storage:
+    format: "parquet"
+    compression: "snappy"
+    partition_by: ["date", "asset"]
+    cache_enabled: true
+    cache_ttl_minutes: 60

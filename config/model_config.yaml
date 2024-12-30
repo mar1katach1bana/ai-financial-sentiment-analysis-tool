@@ -1,0 +1,109 @@
+# Sentiment Model Configuration
+sentiment_model:
+  model_name: "ProsusAI/finbert"
+  max_length: 512
+  batch_size: 16
+  num_labels: 3  # positive, negative, neutral
+  fine_tuning:
+    learning_rate: 2e-5
+    epochs: 3
+    warmup_steps: 500
+    weight_decay: 0.01
+    evaluation_strategy: "steps"
+    eval_steps: 500
+    save_steps: 1000
+    logging_steps: 100
+
+# Named Entity Recognition
+ner_model:
+  model_name: "en_core_web_trf"
+  custom_entities:
+    - "COMPANY"
+    - "TICKER"
+    - "CURRENCY"
+    - "PERCENT"
+    - "MONEY"
+  confidence_threshold: 0.85
+
+# Sentiment Scoring
+sentiment_scoring:
+  window_sizes: [1, 7, 30]  # days
+  smoothing_factor: 0.1
+  min_mentions: 5
+  aggregation_methods:
+    - "mean"
+    - "weighted_mean"
+    - "exponential_weighted_mean"
+
+# Predictive Model
+predictive_model:
+  features:
+    sentiment:
+      - "sentiment_score"
+      - "sentiment_momentum"
+      - "sentiment_volatility"
+    market:
+      - "price"
+      - "volume"
+      - "volatility"
+      - "rsi"
+      - "macd"
+    time:
+      - "day_of_week"
+      - "month"
+      - "is_market_open"
+  
+  model_params:
+    type: "lightgbm"
+    objective: "regression"
+    metric: "rmse"
+    num_leaves: 31
+    learning_rate: 0.05
+    feature_fraction: 0.9
+    bagging_fraction: 0.8
+    bagging_freq: 5
+    early_stopping_rounds: 50
+
+# Backtesting
+backtesting:
+  initial_capital: 100000
+  position_size: 0.1  # 10% of capital per trade
+  stop_loss: 0.02    # 2% stop loss
+  take_profit: 0.04  # 4% take profit
+  max_positions: 5
+  commission: 0.001  # 0.1% commission per trade
+  timeframes:
+    - "1d"
+    - "1h"
+  metrics:
+    - "sharpe_ratio"
+    - "max_drawdown"
+    - "win_rate"
+    - "profit_factor"
+    - "calmar_ratio"
+
+# Evaluation
+evaluation:
+  train_test_split: 0.8
+  validation_size: 0.1
+  metrics:
+    classification:
+      - "accuracy"
+      - "precision"
+      - "recall"
+      - "f1"
+    regression:
+      - "rmse"
+      - "mae"
+      - "r2"
+  cross_validation:
+    n_splits: 5
+    shuffle: true
+
+# Model Serving
+serving:
+  batch_size: 32
+  timeout: 60
+  max_queue_size: 100
+  update_frequency: 3600  # seconds
+  cache_size: 1000

@@ -1,0 +1,11 @@
+```
+
+based on @/README.md , help me create the following files in turn::
+
+1.  "App-flow.md" contains app flowchart
+2.  after creating "App-flow.md" using it and @/README.md to create "Tech-stack.md" contains "Technology Stack",  "Architecture Components", "Key Features" and "Development Process and Practices"
+3.  then using  @/README.md , "App-flow.md" and "Tech-stack.md" to create "File-structure.md" contains "Project File Structure" and "Key Files and Their Roles", how they connect to each other
+4. finnaly, using @/README.md,  , "App-flow.md","Tech-stack.md" and "File-structure.md"  to create "PRD.md" (as known as "Project-requirements-document")
+
+
+```

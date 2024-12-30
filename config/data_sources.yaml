@@ -1,0 +1,129 @@
+# API Endpoints
+apis:
+  twitter:
+    base_url: "https://api.twitter.com/2"
+    endpoints:
+      search: "/tweets/search/recent"
+      stream: "/tweets/sample/stream"
+    rate_limits:
+      requests_per_15min: 450
+      tweets_per_request: 100
+
+  reddit:
+    base_url: "https://oauth.reddit.com"
+    endpoints:
+      subreddit: "/r/{subreddit}/new"
+      search: "/r/{subreddit}/search"
+    rate_limits:
+      requests_per_minute: 60
+
+  news_api:
+    base_url: "https://newsapi.org/v2"
+    endpoints:
+      everything: "/everything"
+      top_headlines: "/top-headlines"
+    rate_limits:
+      requests_per_day: 1000
+
+  alpha_vantage:
+    base_url: "https://www.alphavantage.co/query"
+    endpoints:
+      intraday: "function=TIME_SERIES_INTRADAY"
+      daily: "function=TIME_SERIES_DAILY"
+    rate_limits:
+      requests_per_minute: 5
+
+# Market Data Sources
+market_data:
+  stocks:
+    - source: "alpha_vantage"
+      symbols: ["AAPL", "GOOGL", "MSFT", "AMZN", "META"]
+      interval: "5min"
+      fields: ["open", "high", "low", "close", "volume"]
+    
+    - source: "yahoo_finance"
+      symbols: ["^GSPC", "^DJI", "^IXIC"]  # Market indices
+      interval: "1d"
+      fields: ["open", "high", "low", "close", "volume", "adj_close"]
+
+  crypto:
+    - source: "coinbase"
+      symbols: ["BTC-USD", "ETH-USD"]
+      interval: "1h"
+      fields: ["price", "size", "open", "high", "low", "close", "volume"]
+
+# News Sources
+news_sources:
+  - name: "Reuters"
+    type: "rss"
+    url: "https://www.reutersagency.com/feed/"
+    categories: ["business", "markets", "technology"]
+    language: "en"
+
+  - name: "Bloomberg"
+    type: "api"
+    url: "https://www.bloomberg.com/markets/api"
+    categories: ["stocks", "currencies", "commodities"]
+    language: "en"
+
+  - name: "Yahoo Finance"
+    type: "rss"
+    url: "https://finance.yahoo.com/rss"
+    categories: ["news", "analysis"]
+    language: "en"
+
+# Social Media Sources
+social_media:
+  twitter:
+    search_terms:
+      - "$AAPL"
+      - "$GOOGL"
+      - "$MSFT"
+      - "$AMZN"
+      - "$META"
+      - "#stocks"
+      - "#investing"
+    influencers:
+      - "elonmusk"
+      - "jimcramer"
+      - "carlicahn"
+    min_followers: 1000
+    languages: ["en"]
+
+  reddit:
+    subreddits:
+      - "wallstreetbets"
+      - "stocks"
+      - "investing"
+      - "cryptocurrency"
+    sort_by: "hot"
+    time_filter: "day"
+    min_score: 100
+
+# Database Configuration
+database:
+  type: "postgresql"
+  host: "localhost"
+  port: 5432
+  name: "financial_sentiment"
+  schema:
+    news:
+      table: "news_articles"
+      indexes: ["published_date", "source", "symbols"]
+    social:
+      table: "social_posts"
+      indexes: ["created_at", "platform", "symbols"]
+    sentiment:
+      table: "sentiment_scores"
+      indexes: ["timestamp", "symbol", "source"]
+    market:
+      table: "market_data"
+      indexes: ["timestamp", "symbol", "interval"]
+
+# Cache Configuration
+cache:
+  type: "redis"
+  host: "localhost"
+  port: 6379
+  ttl: 3600  # 1 hour
+  max_size: "1GB"

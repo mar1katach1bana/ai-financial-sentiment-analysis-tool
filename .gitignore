@@ -1,0 +1,120 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Environment variables
+.env
+.env.*
+
+# Data files
+data/raw/*
+data/processed/*
+data/sentiment_scores/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/sentiment_scores/.gitkeep
+
+# Model files
+*.h5
+*.pkl
+*.model
+models/saved/*
+
+# Logs
+*.log
+logs/
+scraping/*.log
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Cache
+__pycache__/
+.cache/
+.pytest_cache/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Scraped data
+*.csv
+*.json
+*.sqlite
+*.db
+
+# API keys and secrets
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.priv
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# user specific
+config/proxies.txt
+pygooglenews*
